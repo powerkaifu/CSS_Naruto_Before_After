@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title>Document</title>
+   <style>
+      * {
+         margin: 0;
+         padding: 0;
+         list-style: none;
+         font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+         box-sizing: border-box;
+         transition: 1s;
+      }
+
+      *::before,
+      *::after {
+         transition: 1s;
+      }
+
+      html,
+      body {
+         height: 100%;
+      }
+
+      body {
+         background: url(bg.jpg) no-repeat fixed center/cover;
+         background-size: cover;
+      }
+
+      .container {
+         height: 100%;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+      }
+
+      /* 定位層 z-index 預設為 auto，也就是 0 */
+      /* 想改變父元素與其 before、after 的 z-index 關係，父元素不設置 z-index，只需將 before、after 設置為負數 */
+
+      .naruto {
+         width: 200px;
+         height: 300px;
+         margin: auto;
+         background-image: url(naruto.png);
+         background-repeat: no-repeat;
+         background-size: cover;
+         filter: none;
+         position: relative;
+      }
+
+      /* 偽元素 */
+      .naruto::before {
+         content: '';
+         width: 200px;
+         height: 300px;
+         background-image: url(naruto.png);
+         background-repeat: no-repeat;
+         background-size: cover;
+
+         position: absolute;
+         top: 0;
+         left: 0;
+
+         opacity: 0;
+      }
+
+      .naruto::after {
+         content: '';
+         width: 200px;
+         height: 300px;
+         background-image: url(naruto.png);
+         background-repeat: no-repeat;
+         background-size: cover;
+
+         position: absolute;
+         top: 0;
+         left: 0;
+
+         opacity: 0;
+      }
+
+      /* 對話框 */
+      .frame {
+         width: 300px;
+         height: 210px;
+         background-image: url(frame.png);
+         background-repeat: no-repeat;
+         background-size: cover;
+
+         font-size: 1.4rem;
+         font-weight: bolder;
+         text-align: center;
+         line-height: 200px;
+
+         position: absolute;
+         top: -60%;
+         right: 10%;
+         bottom: 0;
+         left: 0;
+         margin: auto;
+         z-index: 1;
+
+         opacity: 0;
+      }
+
+      /* 陰影 */
+      .shadow {
+         width: 70%;
+         height: 10%;
+         background: radial-gradient(rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 50%, rgba(255, 255, 255, 0) 100%);
+         border-radius: 50%;
+
+         position: absolute;
+         bottom: 0;
+         left: 0;
+         right: 0;
+         margin: auto;
+
+         opacity: 0;
+      }
+
+      /* 滑鼠效果 */
+      /* 滑鼠摸到.naruto時，選擇它的偽元素::before */
+      .naruto:hover::before {
+         width: 250px;
+         height: 375px;
+         top: 0;
+         left: -100%;
+         opacity: 1;
+      }
+
+      /* 滑鼠摸到.naruto時，選擇它的偽元素::after */
+      .naruto:hover::after {
+         width: 300px;
+         height: 450px;
+         top: -20%;
+         left: 70%;
+         opacity: 1;
+      }
+
+      /* 滑鼠摸到.natuto時，選擇它之後的.frame  */
+      .naruto:hover~.frame {
+         width: 300px;
+         height: 210px;
+         opacity: 1;
+      }
+
+      /* 滑鼠摸到.natuto時，選擇它之後的.shadow  */
+      .naruto:hover~.shadow {
+         width: 70%;
+         height: 20%;
+         opacity: 1;
+      }
+
+      .naruto:hover {
+         filter: drop-shadow(0px 0px 5px yellow) drop-shadow(0px 0px 15px orange) drop-shadow(0px 0px 30px red);
+      }
+
+      /* 發光動畫 */
+      .light {
+         animation: light 3s infinite alternate;
+      }
+
+      @keyframes light {
+         50% {
+            filter: drop-shadow(0px 0px 5px yellow) drop-shadow(0px 0px 15px orange) drop-shadow(0px 0px 25px red);
+         }
+      }
+   </style>
+</head>
+
+
+<body>
+   <div class="container">
+      <div class="naruto light"></div>
+      <div class="frame">偽元素影分身之術！</div>
+      <div class="shadow"></div>
+   </div>
+</body>
+
+</html>
